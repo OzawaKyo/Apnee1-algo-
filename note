@@ -1,0 +1,98 @@
+N = 100, K = 100
+
+execution 1 :
+Moyenne des comparaisons = 2563.11
+Temps total = 0.00 secondes
+Temps moyen par exécution = 0.000010 secondes
+
+execution 2 :
+Moyenne des comparaisons = 2563.11
+Temps total = 0.00 secondes
+Temps moyen par exécution = 0.000009 secondes
+
+execution 3 :
+Moyenne des comparaisons = 2563.11
+Temps total = 0.00 secondes
+Temps moyen par exécution = 0.000010 secondes
+
+
+
+N = 1000, K = 100
+execution 1 :
+Moyenne des comparaisons = 250426.04
+Temps total = 0.12 secondes
+Temps moyen par exécution = 0.001175 secondes
+
+execution 2 :
+Moyenne des comparaisons = 250426.04
+Temps total = 0.17 secondes
+Temps moyen par exécution = 0.001664 secondes
+
+execution 3 :
+Moyenne des comparaisons = 250426.04
+Temps total = 0.08 secondes
+Temps moyen par exécution = 0.000842 secondes
+
+N = 10000, K = 100
+execution 1 :
+Moyenne des comparaisons = 25036594.15
+Temps total = 11.85 secondes
+Temps moyen par exécution = 0.118512 secondes
+
+execution 2 :
+Moyenne des comparaisons = 25036594.15
+Temps total = 11.90 secondes
+Temps moyen par exécution = 0.118951 secondes
+
+execution 3 :
+Moyenne des comparaisons = 25036594.15
+Temps total = 11.74 secondes
+Temps moyen par exécution = 0.117366 secondes
+
+
+
+N = 50000, K = 100
+execution 1 :
+Moyenne des comparaisons = 624992440.21
+Temps total = 227.80 secondes
+Temps moyen par exécution = 2.278003 secondes
+
+execution 2 :
+Moyenne des comparaisons = 624992440.21
+Temps total = 210.95 secondes
+Temps moyen par exécution = 2.109506 secondes
+
+execution 3 :
+Moyenne des comparaisons = 624992440.21
+Temps total = 207.31 secondes
+Temps moyen par exécution = 2.073052 secondes
+
+N = 1000, K = 50
+execution :
+Moyenne des comparaisons = 250120.98
+Temps total = 0.02 secondes
+Temps moyen par exécution = 0.000498 secondes
+
+N = 5000, K = 50
+execution :
+Moyenne des comparaisons = 6249950.10
+Temps total = 1.05 secondes
+Temps moyen par exécution = 0.021034 secondes
+
+N = 10000, K = 50
+execution  :
+Moyenne des comparaisons = 25059143.76
+Temps total = 4.34 secondes
+Temps moyen par exécution = 0.086799 secondes
+
+N = 25000, K = 50
+execution  :
+Moyenne des comparaisons = 156358534.96
+Temps total = 27.27 secondes
+Temps moyen par exécution = 0.545492 secondes
+
+N = 50000, K = 50
+execution  :
+Moyenne des comparaisons = 625239937.62
+Temps total = 92.52 secondes
+Temps moyen par exécution = 1.850480 secondes
