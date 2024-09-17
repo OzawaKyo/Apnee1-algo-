@@ -46,11 +46,11 @@ tri_insertion
 Donnees : t : tableau d'entiers de taille > n, n : entier > 0
 Resultat : le tableau t est trie en ordre croissant
 */
-int tri_insertion(int t[], int n)
+long int tri_insertion(int t[], int n)
 {
   int i, j;
   int Clef;
-  int count = 0;
+  long int count = 0;
 
   for (i = 1; i < n; i++)
   {
@@ -106,9 +106,9 @@ tri_segmentation
 Donnees : t : tableau d'entiers de taille > n, n : entier > 0
 Resultat : le tableau t est trie en ordre croissant
 */
-int tri_segmentation(int t[], int g, int d)
+long int tri_segmentation(int t[], int g, int d)
 {
-    int count = 0;
+    long int count = 0;
     if (g < d)
     {
         int p = Partition(t, g, d, &count);
