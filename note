@@ -96,3 +96,17 @@ execution  :
 Moyenne des comparaisons = 625239937.62
 Temps total = 92.52 secondes
 Temps moyen par exécution = 1.850480 secondes
+
+
+
+
+Taille du tableau (N)	Nombre d'exécutions (K)	Moyenne des comparaisons	Temps total (secondes)	Temps moyen par exécution (secondes)
+100	100	2563,11	0,00	0,00001
+1000	100	250426,04	0,12	0,00118
+10000	100	25036594,15	11,85	0,11851
+50000	100	624992440,21	227,80	2,27800
+1000	50	250120,98	0,02	0,00050
+5000	50	6249950,10	1,05	0,02103
+10000	50	25059143,76	4,34	0,08680
+25000	50	156358534,96	27,27	0,54549
+50000	50	625239937,62	92,52	1,85048

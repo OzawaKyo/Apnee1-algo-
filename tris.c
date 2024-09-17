@@ -2,10 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 
-
-#define NMAX 50000		/* peut etre modifie si necessaire */
-
-
+#define NMAX 50000 /* peut etre modifie si necessaire */
 
 /*
 generation_aleatoire
@@ -15,12 +12,14 @@ Resultat : les valeurs t[0..n-1] ont ete initialisees avec n valeurs aleatoires
 Pre-condition : le generateur aleatoire doit avoir ete initialise avec "srand"
 */
 
-void generation_aleatoire(int t[], int n) {
-  int i ;
+void generation_aleatoire(int t[], int n)
+{
+  int i;
 
-  for (i=0 ; i<n ; i++) {
-	  t[i] = rand() ;
-  } ;
+  for (i = 0; i < n; i++)
+  {
+    t[i] = rand();
+  };
 }
 
 /*
@@ -30,11 +29,13 @@ Resultat : les valeurs t[0..n-1] ont ete initialisees avec n valeurs aleatoires
            prises dans [0,2147483647].
 Pre-condition : le generateur aleatoire doit avoir ete initialise avec "srand"
 */
-void generation_aleatoire_non_uniforme(int t[], int n) {
+void generation_aleatoire_non_uniforme(int t[], int n)
+{
   int i;
   int x = 0;
 
-  for (i=0; i < n; i++) {
+  for (i = 0; i < n; i++)
+  {
     t[i] = x;
     x = x + ((rand() % 10) - 2);
   }
@@ -45,30 +46,59 @@ tri_insertion
 Donnees : t : tableau d'entiers de taille > n, n : entier > 0
 Resultat : le tableau t est trie en ordre croissant
 */
-int tri_insertion(int t[], int n) {
-  int i,j;
+int tri_insertion(int t[], int n)
+{
+  int i, j;
   int Clef;
   int count = 0;
 
-  for(i=1; i < n; i++) {
-    
+  for (i = 1; i < n; i++)
+  {
+
     Clef = t[i];
-    
+
     j = i - 1;
-    
+
     /* Decalage des valeurs du tableau */
-    while((j >= 0) ) {
+    while ((j >= 0))
+    {
       count++;
-      if(t[j] <= Clef) {
+      if (t[j] <= Clef)
+      {
         break;
       }
-      t[j+1] = t[j];
+      t[j + 1] = t[j];
       j = j - 1;
     }
     /* insertion de la clef */
-    t[j+1] = Clef;
+    t[j + 1] = Clef;
   }
   return count;
+}
+
+void Echange(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int Partition(int t[], int g, int d, int *count)
+{
+    int pivot = t[d];
+    int i = g - 1;
+
+    for (int j = g; j < d; j++)
+    {
+        (*count)++;
+        if (t[j] <= pivot)
+        {
+            i++;
+            Echange(&t[i], &t[j]);
+        }
+    }
+    Echange(&t[i + 1], &t[d]);
+    return i + 1;
 }
 
 /*
@@ -76,46 +106,87 @@ tri_segmentation
 Donnees : t : tableau d'entiers de taille > n, n : entier > 0
 Resultat : le tableau t est trie en ordre croissant
 */
-void tri_segmentation(int t[], int n) {
-  /* A completer */
+int tri_segmentation(int t[], int g, int d)
+{
+    int count = 0;
+    if (g < d)
+    {
+        int p = Partition(t, g, d, &count);
+        count += tri_segmentation(t, g, p - 1);
+        count += tri_segmentation(t, p + 1, d);
+    }
+    return count;
 }
 
+void lancer_mesures()
+{
+  int valeurs_N[] = {100, 500, 1000, 5000, 10000, 25000, 40000, 50000}; // Valeurs de N à tester
+  int taille_N = 8;                                       // Nombre de valeurs de N
+  int K = 100;                                             // Nombre d'exécutions par taille de tableau
 
-
-void lancer_mesures() {
   int T[NMAX];
-  int K, N;
-  // unsigned int germe;
+  srand(12345); // Initialiser le générateur aléatoire avec un germe fixe
 
-  // printf("Valeur du germe pour la fonction de tirage aleatoire ? ");
-  // scanf("%d", &germe);
-  // srand(germe);
-
-  printf("Nombre d'exécutions (K) ? ");
-  scanf("%d", &K);
-
-  printf("Taille du tableau (N) ? ");
-  scanf("%d", &N);
-
-  if (N > NMAX) {
-    printf("Erreur : N ne peut pas dépasser %d\n", NMAX);
-    return;
+  printf("Tri par insertion ou par segmentation ? (i/s) ");
+  char choix;
+  while (1)
+  {
+    scanf("%c", &choix);
+    if (choix == 'i' || choix == 's')
+    {
+      break;
+    }
+    printf("Choix invalide. Veuillez entrer 'i' ou 's' : ");
+  }
+    
+  printf("quel type de generation aleatoire ? (u/n) ");
+  char type_generation;
+  while (1)
+  {
+    scanf("%c", &type_generation);
+    if (type_generation == 'u' || type_generation == 'n')
+    {
+      break;
+    }
+    printf("Choix invalide. Veuillez entrer 'u' ou 'n' : ");
   }
 
-  long long total_comparaisons = 0;
-  clock_t debut = clock();
+  for (int i = 0; i < taille_N; i++)
+  {
+    int N = valeurs_N[i];
+    long long total_comparaisons = 0;
+    double total_temps = 0;
+    for (int j = 0; j < K; j++)
+    {
+      if (type_generation == 'u')
+      {
+        generation_aleatoire(T, N);
+      }
+      else
+      {
+        generation_aleatoire_non_uniforme(T, N);
+      }
+      clock_t debut = clock();
+      if (choix == 'i')
+      {
+        total_comparaisons += tri_insertion(T, N);
+      }
+      else
+      {
+        total_comparaisons += tri_segmentation(T, 0, N - 1);
+      }
+      clock_t fin = clock();
+      double temps = (double)(fin - debut) / CLOCKS_PER_SEC;
+      total_temps += temps;
+    }
 
-  for (int k = 0; k < K; k++) {
-    generation_aleatoire(T, N);
-    total_comparaisons += tri_insertion(T, N);
+    double moyenne_comparaisons = (double)total_comparaisons / K;
+    // double temps_moyen = total_temps / K;
+
+    // // Affichage des résultats sous forme de tableau
+    // printf("%d %f %f\n", N, moyenne_comparaisons, temps_moyen);
+
+    //afficher les resultats pour gnu plot , en utilisant le format suivant : N comparaisons (separe par des espaces) 
+    printf("%d %f\n", N, moyenne_comparaisons);
   }
-
-  clock_t fin = clock();
-  double temps = (double)(fin - debut) / CLOCKS_PER_SEC;
-  double moyenne_comparaisons = (double)total_comparaisons / K;
-
-  printf("N = %d, K = %d\n", N, K);
-  printf("Moyenne des comparaisons = %.2f\n", moyenne_comparaisons);
-  printf("Temps total = %.2f secondes\n", temps);
-  printf("Temps moyen par exécution = %.6f secondes\n", temps / K);
 }
