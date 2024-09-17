@@ -83,7 +83,7 @@ void Echange(int *a, int *b)
     *b = temp;
 }
 
-int Partition(int t[], int g, int d, int *count)
+int Partition(int t[], int g, int d, long int *count)
 {
     int pivot = t[d];
     int i = g - 1;
