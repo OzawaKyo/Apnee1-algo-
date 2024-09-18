@@ -131,7 +131,7 @@ void lancer_mesures()
   char choix;
   while (1)
   {
-    scanf("%c", &choix);
+    scanf(" %c", &choix);
     if (choix == 'i' || choix == 's')
     {
       break;
@@ -141,9 +141,10 @@ void lancer_mesures()
     
   printf("quel type de generation aleatoire ? (u/n) ");
   char type_generation;
+
   while (1)
   {
-    scanf("%c", &type_generation);
+    scanf(" %c", &type_generation);
     if (type_generation == 'u' || type_generation == 'n')
     {
       break;
@@ -186,7 +187,7 @@ void lancer_mesures()
     // // Affichage des résultats sous forme de tableau
     // printf("%d %f %f\n", N, moyenne_comparaisons, temps_moyen);
 
-    //afficher les resultats pour gnu plot , en utilisant le format suivant : N comparaisons (separe par des espaces) 
-    printf("%d %f\n", N, moyenne_comparaisons);
+    //afficher les resultats pour gnu plot , en utilisant le format suivant : N comparaisons (separe par des espaces) , avec 2 chiffres apres la virgule
+    printf("%d %.2f\n", N, moyenne_comparaisons);
   }
 }
