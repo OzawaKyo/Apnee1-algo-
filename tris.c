@@ -4,14 +4,6 @@
 
 #define NMAX 50000 /* peut etre modifie si necessaire */
 
-/*
-generation_aleatoire
-Donnees : t : tableau d'entiers de taille > n, n : entier > 0
-Resultat : les valeurs t[0..n-1] ont ete initialisees avec n valeurs aleatoires
-           prises dans [0,2147483647] selon une loi uniforme.
-Pre-condition : le generateur aleatoire doit avoir ete initialise avec "srand"
-*/
-
 void generation_aleatoire(int t[], int n)
 {
   int i;
@@ -22,13 +14,6 @@ void generation_aleatoire(int t[], int n)
   };
 }
 
-/*
-generation_aleatoire_non_uniforme
-Donnees : t : tableau d'entiers de taille > n, n : entier > 0
-Resultat : les valeurs t[0..n-1] ont ete initialisees avec n valeurs aleatoires
-           prises dans [0,2147483647].
-Pre-condition : le generateur aleatoire doit avoir ete initialise avec "srand"
-*/
 void generation_aleatoire_non_uniforme(int t[], int n)
 {
   int i;
@@ -41,12 +26,7 @@ void generation_aleatoire_non_uniforme(int t[], int n)
   }
 }
 
-/*
-tri_insertion
-Donnees : t : tableau d'entiers de taille > n, n : entier > 0
-Resultat : le tableau t est trie en ordre croissant
-*/
-long int tri_insertion(int t[], int n)
+long int tri_insertion_count(int t[], int n)
 {
   int i, j;
   int Clef;
@@ -54,12 +34,9 @@ long int tri_insertion(int t[], int n)
 
   for (i = 1; i < n; i++)
   {
-
     Clef = t[i];
-
     j = i - 1;
 
-    /* Decalage des valeurs du tableau */
     while ((j >= 0))
     {
       count++;
@@ -70,10 +47,14 @@ long int tri_insertion(int t[], int n)
       t[j + 1] = t[j];
       j = j - 1;
     }
-    /* insertion de la clef */
     t[j + 1] = Clef;
   }
   return count;
+}
+
+void tri_insertion(int t[], int n)
+{
+  tri_insertion_count(t, n);
 }
 
 void Echange(int *a, int *b)
@@ -101,31 +82,31 @@ int Partition(int t[], int g, int d, long int *count)
     return i + 1;
 }
 
-/*
-tri_segmentation
-Donnees : t : tableau d'entiers de taille > n, n : entier > 0
-Resultat : le tableau t est trie en ordre croissant
-*/
-long int tri_segmentation(int t[], int g, int d)
+long int tri_segmentation_rec(int t[], int g, int d)
 {
     long int count = 0;
     if (g < d)
     {
         int p = Partition(t, g, d, &count);
-        count += tri_segmentation(t, g, p - 1);
-        count += tri_segmentation(t, p + 1, d);
+        count += tri_segmentation_rec(t, g, p - 1);
+        count += tri_segmentation_rec(t, p + 1, d);
     }
     return count;
 }
 
+void tri_segmentation(int t[], int n)
+{
+    tri_segmentation_rec(t, 0, n - 1);
+}
+
 void lancer_mesures()
 {
-  int valeurs_N[] = {100, 500, 1000, 5000, 10000, 25000, 40000, 50000}; // Valeurs de N à tester
-  int taille_N = 8;                                       // Nombre de valeurs de N
-  int K = 100;                                             // Nombre d'exécutions par taille de tableau
+  int valeurs_N[] = {100, 500, 1000, 5000, 10000, 25000, 40000, 50000};
+  int taille_N = 8;
+  int K = 100;
 
   int T[NMAX];
-  srand(12345); // Initialiser le générateur aléatoire avec un germe fixe
+  srand(12345);
 
   printf("Tri par insertion ou par segmentation ? (i/s) ");
   char choix;
@@ -170,11 +151,11 @@ void lancer_mesures()
       clock_t debut = clock();
       if (choix == 'i')
       {
-        total_comparaisons += tri_insertion(T, N);
+        total_comparaisons += tri_insertion_count(T, N);
       }
       else
       {
-        total_comparaisons += tri_segmentation(T, 0, N - 1);
+        total_comparaisons += tri_segmentation_rec(T, 0, N - 1);
       }
       clock_t fin = clock();
       double temps = (double)(fin - debut) / CLOCKS_PER_SEC;
@@ -182,12 +163,6 @@ void lancer_mesures()
     }
 
     double moyenne_comparaisons = (double)total_comparaisons / K;
-    // double temps_moyen = total_temps / K;
-
-    // // Affichage des résultats sous forme de tableau
-    // printf("%d %f %f\n", N, moyenne_comparaisons, temps_moyen);
-
-    //afficher les resultats pour gnu plot , en utilisant le format suivant : N comparaisons (separe par des espaces) , avec 2 chiffres apres la virgule
     printf("%d %.2f\n", N, moyenne_comparaisons);
   }
 }
